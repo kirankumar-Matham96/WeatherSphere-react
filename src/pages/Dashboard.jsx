@@ -9,16 +9,18 @@ import { Blocks } from "react-loader-spinner";
 const Dashboard = () => {
   const { data, loading } = useSelector(dashboardSelector);
   return (
-    <main className="w-full flex h-screen">
-      <nav className="w-1/6 h-full">
+    <main className="w-full flex h-screen flex-col lg:flex-row">
+      <nav className="w-full lg:w-1/6 h-auto lg:h-full border-r border-gray-300">
         <Sidenav />
       </nav>
-      <section className="w-5/6 h-full overflow-auto flex flex-col items-center ">
-        <h2 className="text-2xl font-semibold text-center my-4">
+
+      <section className="w-full lg:w-5/6 h-full lg:overflow-auto flex flex-col items-center p-4 lg:p-8">
+        <h2 className="text-xl sm:text-2xl font-semibold text-center my-4">
           Temperature Details
         </h2>
+
         {loading ? (
-          <div className="h-full flex justify-center mt-[20rem]">
+          <div className="h-full flex justify-center items-center">
             <Blocks
               height="80"
               width="80"
@@ -30,9 +32,18 @@ const Dashboard = () => {
             />
           </div>
         ) : (
-          <div className="px-16 pb-8">
-            {data && <Chart weatherData={data} />}
-            {data && <Table weatherData={data} />}
+          <div className="w-full max-w-6xl px-4 sm:px-8 pb-8">
+            {data && (
+              <div className="mb-8">
+                <Chart weatherData={data} />
+              </div>
+            )}
+
+            {data && (
+              <div className="overflow-x-auto">
+                <Table weatherData={data} />
+              </div>
+            )}
           </div>
         )}
       </section>

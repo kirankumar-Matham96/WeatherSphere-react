@@ -86,12 +86,13 @@ const Sidenav = () => {
   };
 
   return (
-    <div className="bg-gray-400 w-full h-full flex flex-col p-2 ">
-      <h1 className="mt-6 md:text-[2.5rem] font-semibold drop-shadow-2xl text-black">
+    <div className="bg-gray-400 w-full h-full flex flex-col p-4 md:p-8">
+      <h1 className="mt-6 text-2xl md:text-[2.5rem] font-semibold drop-shadow-2xl text-black text-center">
         Dashboard
       </h1>
+
       <form
-        className=" flex flex-col justify-start items-center w-full pt-32"
+        className="flex flex-col justify-start items-center w-full pt-12 sm:pt-16 md:pt-32"
         onSubmit={handleSubmit}
       >
         <label htmlFor="latitude" className="w-full text-black">
@@ -106,6 +107,7 @@ const Sidenav = () => {
             onChange={(e) => setLatitude(e.target.value)}
           />
         </label>
+
         <label htmlFor="longitude" className="w-full text-black">
           Longitude:
           <input
@@ -118,6 +120,7 @@ const Sidenav = () => {
             onChange={(e) => setLongitude(e.target.value)}
           />
         </label>
+
         <label htmlFor="startDate" className="w-full text-black">
           Start Date:
           <input
@@ -131,6 +134,7 @@ const Sidenav = () => {
             onChange={(e) => handleStartDate(e.target.value)}
           />
         </label>
+
         <label htmlFor="endDate" className="w-full text-black">
           End Date:
           <input
@@ -144,29 +148,31 @@ const Sidenav = () => {
             onChange={(e) => handleEndDate(e.target.value)}
           />
         </label>
-        <div className="w-full flex justify-between mt-2">
+
+        <div className="w-full flex justify-between mt-4">
           <button
-            className="text-xl border-0 rounded-md p-3 bg-orange-600 text-green-50"
+            className="text-lg md:text-xl border-0 rounded-md p-3 bg-orange-600 text-green-50 hover:bg-orange-700 transition-all"
             type="button"
             onClick={clearData}
           >
             Clear
           </button>
           <button
-            className="text-xl border-0 rounded-md p-3 bg-green-600 text-red-50"
+            className="text-lg md:text-xl border-0 rounded-md p-3 bg-green-600 text-red-50 hover:bg-green-700 transition-all"
             type="submit"
           >
             Get Data
           </button>
         </div>
       </form>
+
       {(errors?.latitude ||
         errors?.longitude ||
         errors?.startDate ||
         errors?.endDate) && (
-        <div className="text-red-500 bg-white mt-8 rounded-md py-4 px-2">
-          <h3>Input Error:</h3>
-          <ul className="list-disc ps-5">
+        <div className="text-red-500 bg-white mt-8 rounded-md py-4 px-4 sm:px-6 lg:px-8">
+          <h3 className="font-semibold text-lg">Input Error:</h3>
+          <ul className="list-disc pl-5 text-sm sm:text-base">
             {errors?.latitude && <li>{errors.latitude._errors[0]}</li>}
             {errors?.longitude && <li>{errors.longitude._errors[0]}</li>}
             {errors?.startDate && <li>{errors.startDate._errors[0]}</li>}
