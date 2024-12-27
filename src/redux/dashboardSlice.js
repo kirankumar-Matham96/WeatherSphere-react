@@ -1,14 +1,13 @@
-
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 import axios from "axios";
-
-const cache = {};
+import { setupCache } from "axios-cache-adapter";
 
 /**
  * Fetch weather data using Open-Meteo API
  *
  * This asynchronous function fetches historical weather data based on latitude, longitude, start date, and end date.
  * It caches responses to minimize redundant API calls and improve performance.
+ * It keeps the cache data for a day.
  *
  * Parameters:
  * @param {Object} params - Object containing latitude, longitude, startDate, and endDate.
@@ -23,6 +22,15 @@ const cache = {};
  * @returns {Object} Weather data report containing daily temperature metrics.
  * @throws {Error} Error message in case of failure.
  */
+
+// setting up cache mechanism
+const api = setupCache(
+  axios.create({
+    baseURL: "https://archive-api.open-meteo.com/v1/archive",
+  })
+);
+const cache = api.defaults.cache;
+
 export const fetchWeatherData = createAsyncThunk(
   "dashboard/fetchWeatherData",
   async ({ latitude, longitude, startDate, endDate }, thunkApi) => {
@@ -37,17 +45,12 @@ export const fetchWeatherData = createAsyncThunk(
         timezone: "auto",
       };
 
-      const key = `${latitude}-${longitude}-${startDate}-${endDate}-`;
-
-      if (cache[key]) {
-        return cache[key];
-      }
-
       // if new request
-      const resp = await axios.get(
-        "https://archive-api.open-meteo.com/v1/archive",
-        { params }
-      );
+      const resp = await api.get("", {
+        params,
+        cache: { maxAge: 1000 * 60 * 60 * 24 }, // keeping the cache for 1 day
+      });
+
       const data = resp.data.daily.time.map((time, index) => {
         return {
           time,
@@ -62,10 +65,7 @@ export const fetchWeatherData = createAsyncThunk(
 
       const units = resp.data.daily_units;
 
-      const report = { data, units };
-      cache[key] = report;
-
-      return report;
+      return { data, units };
     } catch (error) {
       console.error(error);
       if (error.response) {

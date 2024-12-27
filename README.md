@@ -2,6 +2,8 @@
 
 Weather Sphere is a responsive web application that provides historical weather forecasts based on user-input location and date ranges. It visualizes data in charts and tables with pagination, offering an intuitive user experience.
 
+See the live demo: [Live](https://weather-sphere-react.vercel.app/)
+
 ## Features
 
 - **Search Weather Data**: Fetch weather data using latitude, longitude, and date range.
