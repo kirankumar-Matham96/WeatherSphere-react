@@ -9,7 +9,7 @@ const Home = () => {
         <div className="pt-[12rem]">
           <h1 className="text-6xl mb-1">Weather Sphere</h1>
           <h2 className="text-3xl mb-1">Find the forecast at your place</h2>
-          <Link to={"/weather"}>
+          <Link to={"/dashboard"}>
             <button className="mt-20 p-4 bg-gray-700 rounded-md text-xl">
               Let's Start
             </button>
