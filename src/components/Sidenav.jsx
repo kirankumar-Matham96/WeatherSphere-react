@@ -92,7 +92,7 @@ const Sidenav = () => {
       </h1>
 
       <form
-        className="flex flex-col justify-start items-center w-full pt-12 sm:pt-16 md:pt-32"
+        className="flex flex-col justify-start items-center w-full pt-4 md:pt-8 lg:pt-12"
         onSubmit={handleSubmit}
       >
         <label htmlFor="latitude" className="w-full text-black">
