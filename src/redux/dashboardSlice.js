@@ -1,13 +1,11 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 import axios from "axios";
-import { setupCache } from "axios-cache-adapter";
 
 /**
  * Fetch weather data using Open-Meteo API
  *
  * This asynchronous function fetches historical weather data based on latitude, longitude, start date, and end date.
  * It caches responses to minimize redundant API calls and improve performance.
- * It keeps the cache data for a day.
  *
  * Parameters:
  * @param {Object} params - Object containing latitude, longitude, startDate, and endDate.
@@ -24,12 +22,7 @@ import { setupCache } from "axios-cache-adapter";
  */
 
 // setting up cache mechanism
-const api = setupCache(
-  axios.create({
-    baseURL: "https://archive-api.open-meteo.com/v1/archive",
-  })
-);
-const cache = api.defaults.cache;
+const cache = {};
 
 export const fetchWeatherData = createAsyncThunk(
   "dashboard/fetchWeatherData",
@@ -45,11 +38,18 @@ export const fetchWeatherData = createAsyncThunk(
         timezone: "auto",
       };
 
+      const key = `${latitude}-${longitude}-${startDate}-${endDate}-`;
+      if (cache[key]) {
+        return cache[key];
+      }
+
       // if new request
-      const resp = await api.get("", {
-        params,
-        cache: { maxAge: 1000 * 60 * 60 * 24 }, // keeping the cache for 1 day
-      });
+      const resp = await axios.get(
+        "https://archive-api.open-meteo.com/v1/archive",
+        {
+          params,
+        }
+      );
 
       const data = resp.data.daily.time.map((time, index) => {
         return {
@@ -64,6 +64,8 @@ export const fetchWeatherData = createAsyncThunk(
       });
 
       const units = resp.data.daily_units;
+
+      cache[key] = { data, units };
 
       return { data, units };
     } catch (error) {
