@@ -1,9 +1,18 @@
+import { useSelector } from "react-redux";
+import { dashboardSelector } from "../redux/dashboardSlice";
+import Pagination from "./Pagination";
+
 const Table = ({ weatherData }) => {
   const { data, units } = weatherData;
+  const { currentPage, rowsPerPage } = useSelector(dashboardSelector);
+
+  const indexOfLastRow = currentPage * rowsPerPage;
+  const indexOfFirstRow = indexOfLastRow - rowsPerPage;
+  const currentRows = data?.slice(indexOfFirstRow, indexOfLastRow);
 
   return (
     <>
-      <table className="border-2 border-gray-600 border-solid w-[95%]">
+      <table className="border-2 border-gray-600 border-solid w-[100%]">
         <thead>
           <tr className="border-2 border-gray-600 border-solid">
             <th className="border-2 border-gray-600 border-solid">Date</th>
@@ -28,7 +37,7 @@ const Table = ({ weatherData }) => {
           </tr>
         </thead>
         <tbody>
-          {data?.map((data) => (
+          {currentRows?.map((data) => (
             <tr
               className="text-center border-2 border-gray-500 border-solid"
               key={data?.time}
@@ -59,8 +68,7 @@ const Table = ({ weatherData }) => {
         </tbody>
       </table>
       <div className="mt-8">
-        <p>pagination</p>
-        {/* <Pagination /> */}
+        <Pagination totalRows={data?.length || 0} />
       </div>
     </>
   );

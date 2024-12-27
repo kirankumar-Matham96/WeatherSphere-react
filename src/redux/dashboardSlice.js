@@ -29,7 +29,6 @@ export const fetchWeatherData = createAsyncThunk(
         "https://archive-api.open-meteo.com/v1/archive",
         { params }
       );
-      console.log("🚀 ~ resp:", resp);
       const data = resp.data.daily.time.map((time, index) => {
         return {
           time,
@@ -71,12 +70,21 @@ const INITIAL_STATE = {
   data: null,
   loading: false,
   error: false,
+  currentPage: 1,
+  rowsPerPage: 10,
 };
 
 const dashboardSlice = createSlice({
   name: "dashboard",
   initialState: INITIAL_STATE,
-  reducers: {},
+  reducers: {
+    setCurrentPage: (state, action) => {
+      state.currentPage = action.payload;
+    },
+    setRowsPerPage: (state, action) => {
+      state.rowsPerPage = action.payload;
+    },
+  },
   extraReducers: (builder) =>
     builder
       .addCase(fetchWeatherData.pending, (state) => {
@@ -84,7 +92,6 @@ const dashboardSlice = createSlice({
       })
       .addCase(fetchWeatherData.fulfilled, (state, action) => {
         state.data = action.payload;
-        console.log("🚀 ~ .addCase ~ payload:", action.payload);
         state.loading = false;
       })
       .addCase(fetchWeatherData.rejected, (state, action) => {
@@ -94,4 +101,5 @@ const dashboardSlice = createSlice({
 });
 
 export default dashboardSlice.reducer;
+export const { setCurrentPage, setRowsPerPage } = dashboardSlice.actions;
 export const dashboardSelector = (state) => state.dashboard;

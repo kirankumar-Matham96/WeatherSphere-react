@@ -11,7 +11,6 @@ import {
   } from "recharts";
   
   const Chart = ({ weatherData }) => {
-      console.log("🚀 ~ Chart ~ weatherData:", weatherData)
     const { data, units } = weatherData;
   
     const CustomTooltip = ({ active, payload, label }) => {
@@ -20,25 +19,25 @@ import {
           <div className="custom-tooltip bg-lime-50 p-1">
             <p className="label text-[red]">Date: {label}</p>
             <p className="desc text-[#003f5c]">
-              Max Apparent Temperature (2m): {payload[0].value}{" "}
+              Max Apparent Temperature (2m): {payload[0]?.value}{" "}
               {units?.apparent_temperature_max}
             </p>
             <p className="desc text-[#ff6361]">
-              Min Apparent Temperature (2m): {payload[1].value}{" "}
+              Min Apparent Temperature (2m): {payload[1]?.value}{" "}
               {units?.apparent_temperature_min}
             </p>
             <p className="desc text-[#58508d]">
-              Mean Apparent Temperature (2m): {payload[2].value}{" "}
+              Mean Apparent Temperature (2m): {payload[2]?.value}{" "}
               {units?.apparent_temperature_mean}
             </p>
             <p className="desc text-[#ff8c00]">
-              Max Temperature: {payload[3].value} {units?.temperature_2m_max}
+              Max Temperature: {payload[3]?.value} {units?.temperature_2m_max}
             </p>
             <p className="desc text-[#bc5090]">
-              Min Temperature: {payload[4].value} {units?.temperature_2m_min}
+              Min Temperature: {payload[4]?.value} {units?.temperature_2m_min}
             </p>
             <p className="desc text-[#395c1d]">
-              Mean Temperature: {payload[5].value} {units?.temperature_2m_mean}
+              Mean Temperature: {payload[5]?.value} {units?.temperature_2m_mean}
             </p>
           </div>
         );
@@ -49,9 +48,9 @@ import {
   
     return (
       <ResponsiveContainer
-        width={"95%"}
+        width={"100%"}
         height={410}
-        className="mb-6 border-2 border-solid border-gray-500"
+        className="mb-16 border-2 border-solid border-gray-500"
       >
         <LineChart data={data} margin={{ top: 20 }}>
           <CartesianGrid strokeDasharray="3 3" />
