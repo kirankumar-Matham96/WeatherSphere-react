@@ -3,6 +3,7 @@ import Sidenav from "../components/Sidenav";
 import Chart from "../components/Chart";
 import { useSelector } from "react-redux";
 import { dashboardSelector } from "../redux/dashboardSlice";
+import Table from "../components/Table";
 
 const Dashboard = () => {
   const { data } = useSelector(dashboardSelector);
@@ -15,7 +16,7 @@ const Dashboard = () => {
       </nav>
       <section className="w-5/6 h-full overflow-auto">
         {data && <Chart weatherData={data} />}
-        <h2>Table </h2>
+        {data && <Table weatherData={data} />}
       </section>
     </main>
   );
