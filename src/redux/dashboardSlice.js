@@ -82,13 +82,13 @@ const dashboardSlice = createSlice({
       .addCase(fetchWeatherData.pending, (state) => {
         state.loading = true;
       })
-      .addCase(fetchWeatherData.fulfilled, (state, payload) => {
-        state.data = payload;
-        console.log("🚀 ~ .addCase ~ payload:", payload);
+      .addCase(fetchWeatherData.fulfilled, (state, action) => {
+        state.data = action.payload;
+        console.log("🚀 ~ .addCase ~ payload:", action.payload);
         state.loading = false;
       })
-      .addCase(fetchWeatherData.rejected, (state, payload) => {
-        state.error = payload;
+      .addCase(fetchWeatherData.rejected, (state, action) => {
+        state.error = action.payload;
         state.loading = false;
       }),
 });

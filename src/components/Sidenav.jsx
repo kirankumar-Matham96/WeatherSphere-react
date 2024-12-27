@@ -63,7 +63,7 @@ const Sidenav = () => {
       setErrors(null);
     }
 
-    dispatch(fetchWeatherData({ latitude, longitude, startDate, endDate }));
+    dispatch(fetchWeatherData(formData));
   };
 
   const handleStartDate = (date) => {
