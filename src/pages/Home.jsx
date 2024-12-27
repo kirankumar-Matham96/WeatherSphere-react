@@ -1,3 +1,29 @@
+/**
+ * Home Component
+ *
+ * This component represents the homepage of the application. It includes a 3D scene rendered using Spline and a call-to-action
+ * button that navigates to the dashboard. The page is designed with a clean, centered layout and is fully responsive.
+ *
+ * Layout:
+ * - The layout is divided into two sections: a text section and a 3D scene section.
+ * - The text section includes a title, a subtitle, and a button that directs users to the dashboard (`/dashboard` route).
+ * - The 3D scene is rendered using the `Spline` component, which displays a visual representation related to the weather theme.
+ *
+ * Responsiveness:
+ * - The page layout is responsive: on larger screens, the content is displayed in a horizontal row (`lg:flex-row`), while on smaller screens, it stacks vertically (`flex-col-reverse`).
+ * - The `Spline` scene is displayed with varying sizes based on the screen width, providing an optimal viewing experience across devices.
+ *
+ * Navigation:
+ * - The `Link` component from `react-router-dom` is used to navigate to the `/dashboard` route when the user clicks the "Let's Start" button.
+ *
+ * Styles:
+ * - The page uses Tailwind CSS for styling, with classes for text size, background colors, padding, margin, and responsive layout.
+ * - The button has hover effects and smooth transitions for an interactive user experience.
+ *
+ * Usage:
+ * - This component is typically used as the landing page or the entry point to the weather app, inviting users to explore the weather forecast.
+ */
+
 import React from "react";
 import Spline from "@splinetool/react-spline";
 import { Link } from "react-router-dom";

@@ -1,8 +1,28 @@
+
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 import axios from "axios";
 
 const cache = {};
 
+/**
+ * Fetch weather data using Open-Meteo API
+ *
+ * This asynchronous function fetches historical weather data based on latitude, longitude, start date, and end date.
+ * It caches responses to minimize redundant API calls and improve performance.
+ *
+ * Parameters:
+ * @param {Object} params - Object containing latitude, longitude, startDate, and endDate.
+ * @param {string} params.latitude - Latitude coordinate.
+ * @param {string} params.longitude - Longitude coordinate.
+ * @param {string} params.startDate - Start date for the weather data.
+ * @param {string} params.endDate - End date for the weather data.
+ *
+ * @param {Object} thunkApi - Thunk API object for handling errors.
+ *
+ * Returns:
+ * @returns {Object} Weather data report containing daily temperature metrics.
+ * @throws {Error} Error message in case of failure.
+ */
 export const fetchWeatherData = createAsyncThunk(
   "dashboard/fetchWeatherData",
   async ({ latitude, longitude, startDate, endDate }, thunkApi) => {
@@ -17,7 +37,6 @@ export const fetchWeatherData = createAsyncThunk(
         timezone: "auto",
       };
 
-      // caching the data //TODO: Need to use some package here (preferably: axios-cache-adopter)
       const key = `${latitude}-${longitude}-${startDate}-${endDate}-`;
 
       if (cache[key]) {

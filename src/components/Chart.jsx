@@ -1,3 +1,37 @@
+/**
+ * Chart Component
+ * 
+ * This component renders a responsive line chart that visualizes weather data, 
+ * including apparent and regular temperature values over time. The chart uses 
+ * the recharts library to display multiple lines for different temperature metrics 
+ * and custom tooltips to provide detailed information when hovering over the chart.
+ *
+ * Props:
+ * - weatherData (object): The weather data to be visualized, containing:
+ *   - data (array): An array of objects with weather data, where each object includes
+ *     time, apparent temperature (max, min, mean), and regular temperature (max, min, mean).
+ *   - units (object): An object containing the units for each temperature metric.
+ *
+ * Custom Tooltip:
+ * - Displays detailed temperature values for each metric (max, min, mean) when hovering over the chart.
+ * - Shows the date (label) and values for the apparent and regular temperatures with corresponding units.
+ *
+ * Lines:
+ * - Each line represents a different temperature metric: apparentTempMax, apparentTempMin, 
+ *   apparentTempMean, temp2MMax, temp2MMin, temp2MMean.
+ * - Each line is styled with a unique color and has an active dot to indicate the point of focus.
+ * - Each line also has a label positioned at the top of the line for better visibility.
+ *
+ * Responsive Container:
+ * - The chart is wrapped in a `ResponsiveContainer` to make it adapt to different screen sizes.
+ *
+ * Usage:
+ * - The chart is rendered inside a `ResponsiveContainer` component that adjusts the width and height 
+ *   based on the container's size.
+ * - The X-axis represents the time, and the Y-axis represents the temperature values.
+ * - The tooltip displays detailed information about each point on hover, showing maximum, 
+ *   minimum, and mean values for both apparent and regular temperatures.
+ */
 import {
     LineChart,
     Line,
@@ -9,10 +43,9 @@ import {
     ResponsiveContainer,
     LabelList,
   } from "recharts";
-  
   const Chart = ({ weatherData }) => {
     const { data, units } = weatherData;
-  
+
     const CustomTooltip = ({ active, payload, label }) => {
       if (active && payload && payload.length) {
         return (

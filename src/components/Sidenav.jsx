@@ -1,3 +1,51 @@
+/**
+ * Sidenav Component
+ *
+ * This component renders a sidebar with a form that allows users to input latitude, longitude,
+ * and a date range (start and end dates) to fetch weather data. The form includes validation for
+ * the latitude, longitude, and date fields, using the Zod library for schema validation.
+ *
+ * Props:
+ * - None (this component does not accept any props).
+ *
+ * State:
+ * - latitude (float): Stores the latitude input value (default is 52.52).
+ * - longitude (float): Stores the longitude input value (default is 13.41).
+ * - startDate (string): Stores the selected start date in the format YYYY-MM-DD (default is "2024-12-09").
+ * - endDate (string): Stores the selected end date in the format YYYY-MM-DD (default is "2024-12-23").
+ * - startDateMax (string): The maximum selectable start date, set to the current date.
+ * - endDateMin (string): The minimum selectable end date, initially set to the start date.
+ * - errors (object or null): Stores validation errors for the form fields, null if no errors.
+ *
+ * useEffect Hook:
+ * - On component mount, triggers the `fetchWeatherData` action with the default values for latitude, longitude, 
+ *   start date, and end date.
+ *
+ * Event Handlers:
+ * - handleSubmit: Handles form submission, performs validation, and dispatches `fetchWeatherData` if validation passes.
+ * - handleStartDate: Updates the start date and adjusts the minimum end date based on the selected start date.
+ * - handleEndDate: Updates the end date and adjusts the maximum start date based on the selected end date.
+ * - clearData: Clears all form fields and resets the date constraints.
+ *
+ * Zod Validation:
+ * - The form data is validated using Zod schema, which checks:
+ *   - Latitude and longitude are numbers and within valid ranges.
+ *   - The start and end dates are required and are formatted correctly.
+ *
+ * Form:
+ * - The form contains input fields for latitude, longitude, start date, and end date.
+ * - The latitude and longitude fields are text inputs with required validation.
+ * - The start and end date fields are date inputs, with the start date field's maximum date dynamically set to the current date.
+ * - On form submission, if validation fails, error messages are displayed.
+ *
+ * Error Handling:
+ * - If any input fields fail validation, an error message is displayed with details about the specific issue(s).
+ * - Error messages are shown in a styled container below the form.
+ *
+ * Usage:
+ * - This component is typically used as a sidebar in a weather dashboard where users can input location and date range 
+ *   to fetch weather data.
+ */
 import { useDispatch, useSelector } from "react-redux";
 import { fetchWeatherData } from "../redux/dashboardSlice";
 import { useState, useEffect } from "react";
